@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ImportExcelController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+  Route::get('/import_excel', [ImportExcelController::class,'index'])->name('excel.index');
+   Route::post('/import_excel/import', [ImportExcelController::class,'import'])->name('excel.import');
