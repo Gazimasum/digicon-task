@@ -37,16 +37,16 @@ class UsersImport implements ToCollection, WithHeadingRow, SkipsOnError,WithVali
                         'name' => $row['name'],
                         'email' => $row['email'],
                         'phone' => $row['phone'],
-                        'password' => Hash::make('password'),
+                        'password' => Hash::make($row['password']),
                         'company' =>  $row['company'],
                          'designation' =>  $row['designation'],
                          'present_address' =>  $row['present_address'],
                          'permanent_address' =>  $row['permanent_address'],
 
                     ]);
-          // Notification::route('mail', $row['email'])->notify(new AccountCreate;
+         
          Notification::send($user,new AccountCreate);
-            // $user->notify(new AccountCreate);
+           
         }
      }
       public function rules(): array

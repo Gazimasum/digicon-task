@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ImportExcelController;
+use App\Http\Controllers\CustomAuthController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,5 +18,8 @@ use App\Http\Controllers\ImportExcelController;
 Route::get('/', function () {
     return view('welcome');
 });
-  Route::get('/import_excel', [ImportExcelController::class,'index'])->name('excel.index');
-   Route::post('/import_excel/import', [ImportExcelController::class,'import'])->name('excel.import');
+
+ Auth::routes();
+Route::get('/import_excel', [ImportExcelController::class,'index'])->name('excel.import.index');
+Route::post('/import_excel/import', [ImportExcelController::class,'import'])->name('excel.import');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
