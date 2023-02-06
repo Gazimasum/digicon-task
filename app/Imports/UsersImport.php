@@ -16,6 +16,9 @@ use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Notifications\AccountCreate;
+use Notification;
+
 class UsersImport implements ToCollection, WithHeadingRow, SkipsOnError,WithValidation,SkipsOnFailure
 
 {
@@ -30,7 +33,7 @@ class UsersImport implements ToCollection, WithHeadingRow, SkipsOnError,WithVali
          
   
         foreach ($rows as $row) {
-         User::create([
+         $user = User::create([
                         'name' => $row['name'],
                         'email' => $row['email'],
                         'phone' => $row['phone'],
@@ -41,7 +44,9 @@ class UsersImport implements ToCollection, WithHeadingRow, SkipsOnError,WithVali
                          'permanent_address' =>  $row['permanent_address'],
 
                     ]);
-    
+          // Notification::route('mail', $row['email'])->notify(new AccountCreate;
+         Notification::send($user,new AccountCreate);
+            // $user->notify(new AccountCreate);
         }
      }
       public function rules(): array
@@ -50,7 +55,7 @@ class UsersImport implements ToCollection, WithHeadingRow, SkipsOnError,WithVali
              '*.name' => ['required', 'string', 'min:3'],
              '*.email' => ['required', 'string', 'email:rfc', 'max:255', 'unique:users'],
              '*.password' => ['required', 'min:6'],
-             '*.phone' => ['required','min:8','max:11','unique:users','numeric'],
+             '*.phone' => ['required','min:8','unique:users','numeric'],
              '*.company' => ['required','min:3','max:200'],
              '*.designation' => ['required','min:3','max:200'],
              '*.present_address' => ['required','max:250','min:3'],
