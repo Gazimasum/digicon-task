@@ -50,7 +50,7 @@ class UsersImport implements ToCollection, WithHeadingRow, SkipsOnError,WithVali
              '*.name' => ['required', 'string', 'min:3'],
              '*.email' => ['required', 'string', 'email:rfc', 'max:255', 'unique:users'],
              '*.password' => ['required', 'min:6'],
-             '*.phone' => ['required','min:8','max:11','unique:users'],
+             '*.phone' => ['required','min:8','max:11','unique:users',numeric],
              '*.company' => ['required','min:3','max:200'],
              '*.designation' => ['required','min:3','max:200'],
              '*.present_address' => ['required','max:250','min:3'],
